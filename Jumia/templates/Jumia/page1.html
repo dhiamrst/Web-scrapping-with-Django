@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Phone Data</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+        }
+        .container {
+            max-width: 960px;
+        }
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
+            transition: 0.3s;
+        }
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0,0,0,0.2);
+        }
+        .card-body {
+            padding: 2em;
+            background-color: white;
+        }
+        .card-title {
+            color: #333;
+            font-size: 1.2em;
+        }
+        .card-text {
+            color: #777;
+        }
+        .price {
+            color: #E91E63;
+            font-weight: bold;
+        }
+        .btn-primary {
+            background-color: #E91E63;
+            border-color: #E91E63;
+        }
+        .btn-primary:hover {
+            background-color: #AD1457;
+            border-color: #AD1457;
+        }
+    </style>
+</head>
+<body>
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-lg-3">
+                <div class="card mb-3">
+                    <div class="card-header">Filters</div>
+                    <div class="card-body">
+                        <form method="GET">
+                            <div class="form-group">
+                                <label for="brand">Brand:</label>
+                                <select class="form-control" id="brand" name="brand">
+                                    <option value="">All Brands</option>
+                                    {% for brand in brands %}
+                                        <option value="{{ brand.brand }}" {% if brand.brand == selected_brand %}selected{% endif %}>{{ brand.brand }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <label for="minPrice">Price Range:</label>
+                                <br>
+                                <p>Minimum</p>
+                                <input type="number" class="form-control" id="minPrice" name="minPrice" min="0" max="10000" step="0.1" value="{{ min_price }}">
+                                <br>
+                                <p>Maximum</p>
+                                <input type="number" class="form-control" id="maxPrice" name="maxPrice" min="0" max="10000" step="0.1" value="{{ max_price }}">
+                                <br>
+                            </div>
+                            <button type="submit" class="btn btn-primary">Filter</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-9">
+                <div class="row">
+                    {% for item in smartphones %}
+                        <div class="col-sm-4 mb-3">
+                            <div class="card">
+                                <div class="card-body">
+                                    <h5 class="card-title"><a target="_blank">{{ item.name }}</a></h5>
+                                    <p class="card-text">{{ item.brand }}</p>
+                                    <p class="card-text price">{{ item.price }}</p>
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
